@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; flex-direction: column; height: 100vh; }
+        .clock { font-size: 48px; margin: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Digital Clock</h1>
+    <div class="clock" id="clock">Loading...</div>
+    <script>
+        function updateClocks() {
+            const utcDate = new Date();
+            const timeZones = {
+                'UTC': utcDate,
+                'New York': new Date(utcDate.toLocaleString('en-US', { timeZone: 'America/New_York' })),
+                'London': new Date(utcDate.toLocaleString('en-GB', { timeZone: 'Europe/London' })),
+                'Tokyo': new Date(utcDate.toLocaleString('en-JP', { timeZone: 'Asia/Tokyo' })),
+                'Sydney': new Date(utcDate.toLocaleString('en-AU', { timeZone: 'Australia/Sydney' })),
+            };
+            const clockDiv = document.getElementById('clock');
+            clockDiv.innerHTML = Object.entries(timeZones).map(([city, time]) => `<div>${city}: ${time.toISOString().slice(0, 19).replace('T', ' ')}</div>`).join('');
+        }
+
+        setInterval(updateClocks, 1000);
+        updateClocks();
+    </script>
+</body>
+</html>
